@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <!-- Header-->
+        <header class="bg-dark py-2">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Product Description </h1>
+                </div>
+            </div>
+        </header>
+        <div class="container">
+            <div class="card mb-8" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-8">
+                    <img src=" {{ product.image.url }}" class="img-fluid rounded-start position-auto">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body text-center">
+                      <h5 class="card-title fw-bolder"> Name: {{ product.name}}</h5>
+                      <p class="card-text fw-bolder ">Description: {{ product.description}}</p>
+                     
+                      {% if product.is_sale %}
+
+                      <div class="card-body p-4">
+                        <div class="text-center">
+                            <!-- Product price-->
+                            <p card-text fw-bolder>
+                             Regular Price: <strike>${{ product.price }}</strike><br>
+                             Offer Price: ${{ product.sale_price }}
+                            </p> 
+                        </div>
+                    </div>
+                      {% else %}
+
+                      <p class="card-text fw-bolder"> Price: {{ product.price}}</p>
+
+                      {% endif %}
+
+                      <a href="{% url 'home' %}" class="btn btn-secondary"> Back </a>
+                      <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add_cart">Add to Cart</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+        </div>
+
+        <script>
+          // check if button is pressed
+          $(document).on('click', '#add-cart', function(e){
+              e.preventDefault();
+      
+              $.ajax({
+                  type: 'POST',
+                  url: '{% url "cart_add" %}',
+                  data: {
+                      product_id: $('#add-cart').val(), // Assuming product ID is stored in a data attribute
+                      csrfmiddlewaretoken: '{{ csrf_token }}',
+                      action: 'post'
+                  },
+                  success: function(json){
+                      console.log(json); // Handle success response
+                  },
+                  error: function(xhr, errmsg, err){
+                      console.log(errmsg); // Handle error response
+                  }
+              });
+          });
+      </script>
+      
+
+{% endblock %}

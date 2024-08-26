@@ -1,0 +1,29 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+        <!-- Header-->
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">Sign Up Page </h1>
+                    
+                </div>
+            </div>
+        </header>
+        <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+            <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px;">
+                <div class="card-body">
+                    <form method="POST" action="{% url 'register' %}">
+                        {% csrf_token %}
+
+                        {{ form.as_p }}
+                        
+
+                        <button type="submit" class="btn btn-primary w-100">Signup</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+{% endblock %}
