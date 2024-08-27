@@ -39,14 +39,14 @@
                       {% endif %}
 
                       <a href="{% url 'home' %}" class="btn btn-secondary"> Back </a>
-                      <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add_cart">Add to Cart</button>
+                      <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">Add to Cart</button>
                     </div>
                   </div>
                 </div>
               </div>
 
         </div>
-
+ 
         <script>
           // check if button is pressed
           $(document).on('click', '#add-cart', function(e){
@@ -61,11 +61,13 @@
                       action: 'post'
                   },
                   success: function(json){
-                      console.log(json); // Handle success response
+                     // console.log(json); // Handle success response
+                     document.getElementById("cart_quantity").textContent = json.quantity
+                     alert('Product added to cart!');
                   },
                   error: function(xhr, errmsg, err){
                       console.log(errmsg); // Handle error response
-                  }
+                  },
               });
           });
       </script>
