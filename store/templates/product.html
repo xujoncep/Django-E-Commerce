@@ -33,11 +33,23 @@
                         </div>
                     </div>
                       {% else %}
-
                       <p class="card-text fw-bolder"> Price: {{ product.price}}</p>
+                      <br>
+                      <div class="row justify-content-center">
+                        <div class="col-md-4">Quantity:</div>
+                        <div class="col-md-2">
+                          <select class="form-select form-select-sm" id="quantity-cart" >
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                          </select>
+                        </div>
+                      </div>
 
                       {% endif %}
-
+                      <br>
                       <a href="{% url 'home' %}" class="btn btn-secondary"> Back </a>
                       <button type="button" value="{{ product.id }}" class="btn btn-secondary" id="add-cart">Add to Cart</button>
                     </div>
@@ -57,6 +69,7 @@
                   url: '{% url "cart_add" %}',
                   data: {
                       product_id: $('#add-cart').val(), // Assuming product ID is stored in a data attribute
+                      product_qty: $('#quantity-cart option:selected').text(), 
                       csrfmiddlewaretoken: '{{ csrf_token }}',
                       action: 'post'
                   },
